@@ -2,11 +2,13 @@
   "name": "caddy-control",
   "description": "An open-source alternative to approximated, SaaS custom domains etc. Proxy any incoming domain to upstream host, IP, internal service etc",
   "version": "0.1.0",
+  "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
+    "dev": "vite",
+    "build": "prisma generate && tsc && vite build",
+    "start": "vite preview",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "db:migrate": "prisma migrate dev",
     "dev:caddy": "docker compose -f docker-compose.dev.yml up -d",
     "image:build": "docker build --platform linux/amd64 -t caddy-control .",
     "image:push": "docker tag caddy-control:latest itbeeazy/caddy-control:1.0.0 && docker push itbeeazy/caddy-control:1.0.0"
@@ -34,7 +36,6 @@
     "@radix-ui/react-separator": "^1.1.2",
     "@radix-ui/react-slot": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.1.8",
-    "@tabler/icons-react": "^3.31.0",
     "@tanstack/react-query": "^5.69.0",
     "axios": "^1.8.4",
     "bcryptjs": "^3.0.2",
@@ -42,11 +43,11 @@
     "clsx": "^2.1.1",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.483.0",
-    "next": "canary",
     "next-themes": "^0.4.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
+    "react-router-dom": "^7.5.1",
     "sonner": "^2.0.1",
     "tailwind-merge": "^3.0.2",
     "tw-animate-css": "^1.2.4",
@@ -54,15 +55,16 @@
     "zustand": "^5.0.3"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^4.4.1",
+    "@tailwindcss/vite": "^4.1.4", 
     "eslint": "^9",
-    "eslint-config-next": "15.2.4",
     "prisma": "^6.5.0",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vite": "^6.3.2"
   }
 }

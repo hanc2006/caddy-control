@@ -1,4 +1,4 @@
-import { IconAlertTriangle } from '@tabler/icons-react';
+import { AlertTriangle } from 'lucide-react';
 import { FC } from 'react'
 import { ConfirmDialog } from '../confirm-dialog';
 import { GetKeysResponse } from '@/app/api/keys/keys-schema';
@@ -33,7 +33,7 @@ const KeyDeleteConfirm: FC<Props> = ({
             isLoading={deleteKeyMutation.isPending}
             title={
                 <span className='text-destructive'>
-                    <IconAlertTriangle
+                    <AlertTriangle
                         className='mr-1 inline-block stroke-destructive'
                         size={18}
                     />{' '}

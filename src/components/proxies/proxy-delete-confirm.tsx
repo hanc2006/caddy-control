@@ -1,5 +1,5 @@
 import { useDeleteDomain } from '@/hooks/domains/domain.hooks';
-import { IconAlertTriangle } from '@tabler/icons-react';
+import { AlertTriangle } from 'lucide-react';
 import { FC } from 'react'
 import { ConfirmDialog } from '../confirm-dialog';
 import { DomainWithCheckResults } from '@/app/api/domain/domain-types';
@@ -33,7 +33,7 @@ const ProxyDeleteConfirm: FC<Props> = ({
             isLoading={deleteDomainMutation.isPending}
             title={
                 <span className='text-destructive'>
-                    <IconAlertTriangle
+                    <AlertTriangle
                         className='mr-1 inline-block stroke-destructive'
                         size={18}
                     />{' '}

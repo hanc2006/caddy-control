@@ -7,7 +7,7 @@ import ProxiesActions from "@/components/proxies/proxies-actions";
 import { Separator } from "@/components/ui/separator";
 import { useGetRegisteredDomains } from "@/hooks/domains/domain.hooks";
 
-export default function Home() {
+export default function DashboardPage() {
   const { data, isLoading } = useGetRegisteredDomains();
 
   return (
@@ -19,11 +19,13 @@ export default function Home() {
         actions={<ProxiesActions />}
       />
       <Separator />
-      {isLoading ? (
-        <BoxLoader height="h-[24vh]" />
-      ) : (
-        <Proxies proxyData={data} />
-      )}
+      <div className="flex flex-1 items-start justify-center rounded-lg border border-dashed shadow-sm p-4">
+        {isLoading ? (
+          <BoxLoader height="h-[24vh]" />
+        ) : (
+          <Proxies proxyData={data} />
+        )}
+      </div>
     </div>
   );
 }

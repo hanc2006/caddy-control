@@ -3,7 +3,7 @@ import { LoginFormData, PasswordChangeData } from "@/schemas/user/auth.schema";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import apiClient from "@/lib/api-client";
 import { useAuthStore } from "@/store/authStore";
-import { useRouter } from "next/navigation";
+import { useNavigate } from "react-router-dom";
 import { User } from "@/schemas/user/user.schema";
 import { toast } from "sonner";
 
@@ -66,7 +66,7 @@ export const useChangePassword = () => {
 
 export const useLogin = () => {
   const { setAccessToken, resetAuthStore } = useAuthStore();
-  const router = useRouter();
+  const navigate = useNavigate();
 
   return useMutation({
     mutationFn: (payload: LoginFormData) => login(payload),
@@ -78,7 +78,7 @@ export const useLogin = () => {
       const { accessToken } = data.data;
       if (accessToken) {
         setAccessToken(accessToken);
-        router.replace("/");
+        navigate("/", { replace: true });
       } else {
         resetAuthStore();
       }
@@ -88,10 +88,10 @@ export const useLogin = () => {
 
 export const useLogout = () => {
   const { resetAuthStore } = useAuthStore();
-  const router = useRouter();
+  const navigate = useNavigate();
   return () => {
     // add required cleanups on logout
     resetAuthStore();
-    router.replace("/login");
+    navigate("/login", { replace: true });
   };
 };

@@ -1,6 +1,5 @@
 "use client";
 
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -8,47 +7,31 @@ import { useGetQueryClient } from "@/hooks/query/useGetQueryClient";
 import { useEffect } from "react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
+// Keep children prop as Routes are passed implicitly
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const queryClient = useGetQueryClient()
+  const queryClient = useGetQueryClient();
 
   useEffect(() => {
     document.title = "Caddy Control";
   }, []);
 
+  // Remove <html>, <head>, and <body> tags
   return (
-    <html lang="en">
-      <head>
-        {/* Favicon */}
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-      </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <main>
-              {children}
-            </main>
-          </TooltipProvider>
+    // Use a React Fragment or a div if needed for styling/structure
+    <>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <main>
+            {children}
+          </main>
+        </TooltipProvider>
 
-          <Toaster />
-        </QueryClientProvider>
-      </body>
-    </html>
+        <Toaster />
+      </QueryClientProvider>
+    </>
   );
 }

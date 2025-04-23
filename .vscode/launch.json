@@ -1,0 +1,56 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Launch Backend API",
+        "runtimeExecutable": "pnpm", // Use pnpm to run the script
+        "runtimeArgs": [
+          "run",
+          "dev:backend" // Assumes you create a script named "dev:backend" in package.json
+        ],
+        "cwd": "${workspaceFolder}",
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen",
+        "serverReadyAction": { // Optional: Automatically open browser when server starts
+          "pattern": "Backend server running on port ([0-9]+)", // Adjust pattern if your server logs differently
+          "uriFormat": "http://localhost:%s",
+          "action": "debugWithChrome" // Or "openExternally"
+        },
+        "skipFiles": [
+          "<node_internals>/**",
+          "node_modules/**"
+        ]
+      },
+      {
+        "type": "node",
+        "request": "attach",
+        "name": "Attach to Backend",
+        "port": 9229, // Default Node.js inspect port
+        "restart": true,
+        "skipFiles": [
+          "<node_internals>/**"
+        ]
+      },
+      {
+        "name": "Launch Vite Frontend",
+        "type": "node", // Use node runner for pnpm
+        "request": "launch",
+        "runtimeExecutable": "pnpm", // Use pnpm
+        "runtimeArgs": [
+          "run",
+          "dev" // Runs the "dev": "vite" script from package.json
+        ],
+        "cwd": "${workspaceFolder}",
+        "console": "integratedTerminal",
+        "internalConsoleOptions": "neverOpen",
+        "serverReadyAction": {
+          "pattern": "Local:\\s+(http://localhost:[0-9]+)", // Vite's output pattern
+          "uriFormat": "%s",
+          "action": "debugWithChrome" // Or "openExternally"
+        }
+      }
+    ]
+  }
+  
