@@ -2,11 +2,11 @@ import { handleServerError } from "@/lib/handle-server-error";
 import { resetAuth } from "@/store/authStore";
 import { QueryCache, QueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { useRouter } from "next/navigation";
+  import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 export const useGetQueryClient = () => {
-  const router = useRouter();
+  const navigate = useNavigate();
 
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -40,7 +40,7 @@ export const useGetQueryClient = () => {
           if (error.response?.status === 401) {
             toast("Session expired!");
             resetAuth();
-            router.replace("/login");
+            navigate("/login", { replace: true });
           }
           if (error.response?.status === 500) {
             toast("Internal Server Error!");

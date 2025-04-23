@@ -1,26 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useAuthStore } from "@/store/authStore";
-import { useRouter } from "next/navigation";
+import { Outlet } from "react-router-dom"; // Import Outlet
 
-export default function PublicLayout({ children }: { children: React.ReactNode }) {
-    const [checking, setChecking] = useState(true);
-    const { accessToken } = useAuthStore();
-    const router = useRouter();
-
-
-    useEffect(() => {
-        if (accessToken && !checking) {
-            router.replace("/");
-        } else {
-            setChecking(false);
-        }
-    }, [accessToken, router]);
-
-    if (checking) return null;
-
-    return (
-        <div>{children}</div>
-    );
+export default function PublicLayout({}: {}) { // Remove children prop type
+  return (
+    // Add any layout specific to public pages (e.g., centering login form)
+    <div>
+       {/* Outlet renders the matched child route component (e.g., LoginPage) */}
+      <Outlet />
+    </div>
+  );
 }

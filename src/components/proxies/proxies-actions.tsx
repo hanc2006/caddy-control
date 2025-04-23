@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { Button } from '../ui/button'
-import { IconPlus, IconRefresh } from '@tabler/icons-react'
+import { Plus, RefreshCw, Eye } from 'lucide-react'
 import { useQueryClient, useIsFetching } from '@tanstack/react-query'
 import { AddProxyDialog } from './add-proxy-dialog'
-import { Eye } from 'lucide-react'
 import { ViewRawDialog } from './view-raw-dialog'
 
 const ProxiesActions = () => {
@@ -31,19 +30,19 @@ const ProxiesActions = () => {
             <div className='flex items-center justify-end gap-4'>
                 <Button onClick={refreshProxies} className='cursor-pointer' variant={'outline'}>
                     <span>
-                        <IconRefresh className={isFetchingDomains ? 'animate-spin' : ''} />
+                        <RefreshCw className={isFetchingDomains ? 'animate-spin' : ''} size={16} />
                     </span>
                     Refresh
                 </Button>
                 <Button onClick={handlViewRaw} className='cursor-pointer' variant={'outline'}>
                     <span>
-                        <Eye />
+                        <Eye size={16} />
                     </span>
                     View Raw JSON
                 </Button>
                 <Button onClick={handleAddProxy} className='cursor-pointer' variant={'default'}>
                     <span>
-                        <IconPlus />
+                        <Plus size={16} />
                     </span>
                     Add Proxy
                 </Button>

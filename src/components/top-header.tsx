@@ -1,29 +1,29 @@
-import { IconDrone, IconExternalLink } from "@tabler/icons-react"
-import { Header } from "./header"
-import { usePathname } from "next/navigation"
-import Link from "next/link"
-import { ProfileDropdown } from "./profile-dropdown"
-import ChangePassword from "./user/change-password"
-import { useState } from "react"
+import { Share2, ExternalLink } from 'lucide-react';
+import { Header } from "./header";
+import { Link, useLocation } from "react-router-dom";
+import { ProfileDropdown } from "./profile-dropdown";
+import ChangePassword from "./user/change-password";
+import { useState } from "react";
 
 const NAV_ITEMS = [
-    { name: "Proxies", href: "/" },
-    { name: "API Keys", href: "/api-keys" },
+    { name: "Proxies", to: "/" },
+    { name: "API Keys", to: "/api-keys" },
     {
         name: "Docs",
-        href: "https://github.com/avashForReal/caddy-control",
+        to: "https://github.com/avashForReal/caddy-control",
         newTab: true,
-        icon: <IconExternalLink stroke={1.5} width={16} height={16} />
+        icon: <ExternalLink strokeWidth={1.5} width={16} height={16} />
     },
 ];
 
+
 const TopHeader = () => {
-    const pathname = usePathname()
+    const location = useLocation();
+    const pathname = location.pathname;
     const [passwordDialogOpen, setPasswordDialogOpen] = useState(false);
 
-    const openPasswordDialog = () => setPasswordDialogOpen(true)
-    const closePasswordDialog = () => setPasswordDialogOpen(false)
-
+    const openPasswordDialog = () => setPasswordDialogOpen(true);
+    const closePasswordDialog = () => setPasswordDialogOpen(false);
 
     return (
         <>
@@ -31,7 +31,7 @@ const TopHeader = () => {
                 <div className='flex items-center justify-between gap-4 w-full'>
                     {/* logo */}
                     <div className="flex items-center justify-start gap-2">
-                        <IconDrone stroke={1.25} />
+                        <Share2 strokeWidth={1.25} size={24} />
                         <div className="text-lg font-bold text-gray-700">
                             Caddy Control
                         </div>
@@ -39,12 +39,12 @@ const TopHeader = () => {
 
                     {/* Navigation */}
                     <nav className="flex items-center gap-6">
-                        {NAV_ITEMS.map(({ name, href, icon, newTab }) => (
+                        {NAV_ITEMS.map(({ name, to, icon, newTab }) => (
                             <Link
-                                key={href}
-                                href={href}
+                                key={to}
+                                to={to}
                                 target={newTab ? "_blank" : "_self"}
-                                className={`relative px-3 py-1 text-gray-800 transition-all ${pathname === href
+                                className={`relative px-3 py-1 text-gray-800 transition-all ${pathname === to
                                     ? "font-semibold border-b border-black"
                                     : "hover:text-black"
                                     }`}
@@ -72,7 +72,7 @@ const TopHeader = () => {
                 onClose={closePasswordDialog}
             />
         </>
-    )
-}
+    );
+};
 
-export default TopHeader
+export default TopHeader;

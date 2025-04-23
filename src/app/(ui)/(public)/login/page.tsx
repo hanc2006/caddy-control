@@ -2,8 +2,22 @@
 
 import { Card } from '@/components/ui/card'
 import { LoginForm } from './components/login-form'
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from '@/store/authStore';
+import { useLogin } from "@/hooks/user/user.hooks";
 
-export default function Setup() {
+export default function LoginPage() {
+  const { accessToken } = useAuthStore();
+  const navigate = useNavigate();
+  const loginMutation = useLogin();
+
+  useEffect(() => {
+    if (accessToken) {
+      navigate('/');
+    }
+  }, [accessToken, navigate]);
+
   return (
     <Card className='p-6'>
       <div className='mb-2 flex flex-col space-y-2 text-left'>
@@ -16,5 +30,5 @@ export default function Setup() {
       </div>
       <LoginForm />
     </Card>
-  )
+  );
 }

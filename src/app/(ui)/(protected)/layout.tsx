@@ -1,55 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useAuthStore } from "@/store/authStore";
-import { useRouter } from "next/navigation";
 import TopHeader from "@/components/top-header";
-import { useGetProfile } from "@/hooks/user/user.hooks";
-import { BoxLoader } from "@/components/loader";
-import ChangePassword from "@/components/user/change-password";
+import { useAuthStore } from "@/store/authStore";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Outlet } from "react-router-dom";
 
-export default function ProtectedLayout({ children }: { children: React.ReactNode }) {
-    const [checking, setChecking] = useState(true);
-    const { accessToken, user, setUser } = useAuthStore();
-    const { data: userData, isLoading: isLoadingProfile } = useGetProfile(!!accessToken)
-    const router = useRouter();
+export default function ProtectedLayout({}: {}) {
+  const { accessToken } = useAuthStore();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!accessToken && !checking) {
-            router.replace("/login");
-        } else {
-            setChecking(false);
-        }
-    }, [accessToken, router, checking]);
-
-
-    useEffect(() => {
-        if (userData) {
-            setUser(userData)
-        }
-    }, [userData, setUser])
-
-    if (isLoadingProfile) {
-        return (
-            <BoxLoader />
-        )
+  useEffect(() => {
+    if (!accessToken) {
+      navigate('/login', { replace: true });
     }
+  }, [accessToken, navigate]);
 
-    if (checking) return null;
+  if (!accessToken) return null;
 
-    return (
-        <div className="h-screen flex flex-col px-48 overflow-hidden">
-            <TopHeader />
-            <div className="flex-1 px-4 pb-10 max-h-[86vh]">
-                {children}
-            </div>
-            <ChangePassword
-                title="Reset your password!"
-                description="Please create a new password for your account."
-                open={!!user?.forcePasswordChange}
-                hideCloseIcon={true}
-                onClose={() => { }}
-            />
-        </div>
-    );
+  return (
+    <div className="h-screen flex flex-col px-48 overflow-hidden">
+      <TopHeader />
+      <div className="flex-1 px-4 pb-10 max-h-[86vh]">
+        <Outlet />
+      </div>
+    </div>
+  );
 }

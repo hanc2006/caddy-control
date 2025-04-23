@@ -11,5 +11,5 @@ else
 fi
 
 # Start the application
-echo "Starting Next.js application..."
-exec node server.js
+echo "Starting Vite preview server..."
+exec pnpm start
